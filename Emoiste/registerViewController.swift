@@ -182,7 +182,7 @@ class registerViewController: UIViewController, UITextFieldDelegate {
             "isBlogger" : isBlogger,
             "rememberMe" : rememberMe,
             "notifications" : notifications,
-            "socialNetwork" : socialNetwork
+            //"socialNetwork" : socialNetwork
         ]
         
         let manager = AFHTTPRequestOperationManager(baseURL: baseURL)
