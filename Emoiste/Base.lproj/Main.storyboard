@@ -149,30 +149,12 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wGg-Bf-RQQ">
-                                        <rect key="frame" x="10" y="300" width="275" height="47"/>
+                                        <rect key="frame" x="10" y="270" width="275" height="47"/>
                                         <state key="normal" image="create_account">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
                                             <action selector="createAccount:" destination="EY2-hc-ZE3" eventType="touchUpInside" id="l7q-Zj-ciM"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L5W-YK-OjQ">
-                                        <rect key="frame" x="12" y="167" width="275" height="47"/>
-                                        <state key="normal" image="g+">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="loginWithGoogle:" destination="EY2-hc-ZE3" eventType="touchUpInside" id="wRS-gc-QYd"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ciT-MX-lHz">
-                                        <rect key="frame" x="12" y="112" width="275" height="47"/>
-                                        <state key="normal" image="login_twitter">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="loginTwitter:" destination="EY2-hc-ZE3" eventType="touchUpInside" id="2Sy-QN-UI5"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GnY-5v-30N">
@@ -185,7 +167,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jid-CW-xKT">
-                                        <rect key="frame" x="12" y="222" width="275" height="47"/>
+                                        <rect key="frame" x="12" y="199" width="275" height="47"/>
                                         <state key="normal" image="create_account">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -194,11 +176,20 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Already have an account" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jLL-kS-r5c">
-                                        <rect key="frame" x="41" y="235" width="223" height="21"/>
+                                        <rect key="frame" x="41" y="212" width="223" height="21"/>
                                         <color key="backgroundColor" red="0.30980392156862746" green="0.27843137254901962" blue="0.26666666666666666" alpha="1" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </label>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L5W-YK-OjQ">
+                                        <rect key="frame" x="8" y="129" width="275" height="47"/>
+                                        <state key="normal" image="g+">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="loginWithGoogle:" destination="EY2-hc-ZE3" eventType="touchUpInside" id="wRS-gc-QYd"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
@@ -595,7 +586,6 @@
         <image name="fondo_textfield" width="402" height="70"/>
         <image name="g+" width="401" height="70"/>
         <image name="login_facebook" width="401" height="70"/>
-        <image name="login_twitter" width="401" height="70"/>
         <image name="logo" width="540" height="143"/>
         <image name="social_sites" width="220" height="51"/>
     </resources>
@@ -606,6 +596,6 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="vBB-Ar-Dvl"/>
-        <segue reference="e6p-lI-UdH"/>
+        <segue reference="VGH-r6-rRA"/>
     </inferredMetricsTieBreakers>
 </document>

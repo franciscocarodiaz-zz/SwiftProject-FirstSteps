@@ -101,7 +101,7 @@ class signUpViewController: UIViewController, FBLoginViewDelegate, GPPSignInDele
     func fbRequestCompletionHandler(connection:FBRequestConnection!, result:AnyObject!, error:NSError!) {
         if let gotError = error {
             let alertController = UIAlertController(title: "Atención", message:
-                "No se ha podido iniciar sesión con Facebook", preferredStyle: UIAlertControllerStyle.Alert)
+                "No se ha podido iniciar sesion con Facebook", preferredStyle: UIAlertControllerStyle.Alert)
             alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default,handler: nil))
             self.presentViewController(alertController, animated: true, completion: nil)
         } else {
@@ -113,21 +113,23 @@ class signUpViewController: UIViewController, FBLoginViewDelegate, GPPSignInDele
             let gender = result.valueForKey("gender")! as NSString
             let notifications = true
             let socialNetwork = 1
-            /*let userImageURL = "https://graph.facebook.com/\(userFBID)/picture?type=small"
+            let country = DefaultCountry            /*let userImageURL = "https://graph.facebook.com/\(userFBID)/picture?type=small"
             let url = NSURL (string: userImageURL)
             let imageData = NSData (contentsOfURL: url!)
             let image = UIImage(data: imageData!)
             profileImageView.image = image*/
             
             // Registramos usuario en Backend
-            registerUser(code, nickName: nickName, email: email, password: password, gender: gender, notifications: notifications, socialNetwork: socialNetwork)
-            
+            registerUser(code, nickName : nickName, email : email, password: password, country: country  , gender: gender, notifications: notifications, isBlogger: false, rememberMe: false, socialNetwork: socialNetwork)
         }
     }
     
     //MARK: Google+
     
     func finishedWithAuth(auth: GTMOAuth2Authentication!, error: NSError!) {
+        
+        println(auth)
+        
         if let gotError = error {
             let alertController = UIAlertController(title: "Atención", message:
                 "No se ha podido iniciar sesión con Google+", preferredStyle: UIAlertControllerStyle.Alert)
@@ -142,8 +144,33 @@ class signUpViewController: UIViewController, FBLoginViewDelegate, GPPSignInDele
             let gender = signIn?.googlePlusUser.gender as String!
             let notifications = true
             let socialNetwork = 3
+            
+            
+            
+            println("Estamos en el registro Google")
+            
+            println(name,code,nickName,email,password,gender,notifications,socialNetwork)
+            
             // Registramos usuario en Backend
-            registerUser(code, nickName: nickName, email: email, password: password, gender: gender, notifications: notifications, socialNetwork: socialNetwork)
+            
+            // Datos
+            //let code: NSString = "EmGuest"
+            //let nickName = nickField.text
+            //let email = emailField.text
+            //let password = passwordField.text
+            //let gender = genderType
+            //let notifications = true
+            //let socialNetwork = 0
+            let country = "United States"
+            
+            var rememberMe = false
+            
+            var isBlogger = false
+            
+            // Registramos usuario normal en Backend
+            registerUser(code, nickName: nickName, email: email, password: password, country: country, gender: gender, notifications: notifications, isBlogger: isBlogger, rememberMe: rememberMe, socialNetwork: socialNetwork)
+            
+            //registerUser(code, nickName: nickName, email: email, password: password, gender: gender, notifications: notifications, socialNetwork: socialNetwork)
         }
     }
     
@@ -154,14 +181,13 @@ class signUpViewController: UIViewController, FBLoginViewDelegate, GPPSignInDele
         self.presentViewController(alertController, animated: true, completion: nil)
     }
     
-    //MARK: Registro Backend
     
     // Registramos usuario en Backend
-    func registerUser(code: String, nickName: String, email: String, password: String, gender: String, notifications: Bool, socialNetwork:Int) {
-
+    func registerUser(code: String, nickName: String, email: String, password: String, country: String, gender: String, notifications: Bool, isBlogger: Bool, rememberMe: Bool, socialNetwork:Int) {
+        
         let loadingHUD = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
         loadingHUD.mode = MBProgressHUDModeIndeterminate
-        loadingHUD.labelText = "Iniciando"
+        loadingHUD.labelText = "Creando cuenta"
         
         let path = PATH_WS_USER;
         let baseURL = NSURL(string: path)
@@ -171,7 +197,10 @@ class signUpViewController: UIViewController, FBLoginViewDelegate, GPPSignInDele
             "nickName" : nickName,
             "email" : email,
             "password" : password,
+            "country" : country,
             "gender" : gender,
+            "isBlogger" : isBlogger,
+            "rememberMe" : rememberMe,
             "notifications" : notifications,
             "socialNetwork" : socialNetwork
         ]
@@ -184,19 +213,26 @@ class signUpViewController: UIViewController, FBLoginViewDelegate, GPPSignInDele
         manager.POST("register",
             parameters: params,
             success: { (operation: AFHTTPRequestOperation!, responseObject: AnyObject!) in
-                //println(responseObject.description)
+                println(responseObject.description)
+
+                
                 if (responseObject != nil) {
                     self.dataUserLoaded(responseObject, social: socialNetwork)
                 } else {
-                     self.dataUserFailed(socialNetwork)
+                    self.dataUserFailed(socialNetwork)
                 }
             },
             failure: { (operation: AFHTTPRequestOperation!, error: NSError!) in
                 //println(error.description)
-                self.dataUserFailed(socialNetwork)
+                
+                 self.dataUserFailed(socialNetwork)
             }
         )
     }
+
+    
+    //MARK: Registro Backend
+    
     
     func dataUserLoaded(responseObject: AnyObject, social: Int) {
         MBProgressHUD.hideAllHUDsForView(self.view, animated: true)

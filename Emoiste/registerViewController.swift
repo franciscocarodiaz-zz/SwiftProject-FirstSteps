@@ -137,7 +137,7 @@ class registerViewController: UIViewController, UITextFieldDelegate {
             rememberMe = true
         }
         
-        // Registramos usuario en Backend
+        // Registramos usuario normal en Backend
         registerUser(code, nickName: nickName, email: email, password: password, country: country, gender: gender, notifications: notifications, isBlogger: isBlogger, rememberMe: rememberMe, socialNetwork: socialNetwork)
 
     }
@@ -182,7 +182,7 @@ class registerViewController: UIViewController, UITextFieldDelegate {
             "isBlogger" : isBlogger,
             "rememberMe" : rememberMe,
             "notifications" : notifications,
-            //"socialNetwork" : socialNetwork
+            "socialNetwork" : socialNetwork
         ]
         
         let manager = AFHTTPRequestOperationManager(baseURL: baseURL)
