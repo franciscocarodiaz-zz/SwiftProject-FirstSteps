@@ -14,6 +14,9 @@ import AssetsLibrary
 import CoreLocation
 import CoreMotion
 
+
+//probando git
+
 class signUpViewController: UIViewController, FBLoginViewDelegate, GPPSignInDelegate {
 
     // Google+
