@@ -2,7 +2,7 @@
 //  User.swift
 //  Emoiste
 //
-//  Created by Juan Manuel Hernandez del Olmo on 16/1/15.
+//  Created by David Hevilla Garcia on 16/1/15.
 //  Copyright (c) 2015 Emoiste. All rights reserved.
 //
 
