@@ -17,7 +17,10 @@ class HomeViewController: UIViewController {
         
         var defaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
         let typeLogin = defaults.objectForKey("Login") as Int
+        let nickName = defaults.objectForKey(kUSER_NICKNAME) as String
+        let email = defaults.objectForKey(kUSER_EMAIL) as String
         var texto = "Nick Name: \(USER_DATA.nickName!)\nEmail: \(USER_DATA.email!)"
+        //var texto = "Nick Name: \(nickName)\nEmail: \(email)"
         userTextView.text = texto
         
     }

@@ -32,11 +32,39 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Login: 0-no login, 1-login facebook, 3-login Google+, 999-Cuenta
         if (defaults.objectForKey("Login") == nil) {
             defaults.setObject(0, forKey: "Login")
+        }else{
+            var login = defaults.integerForKey("Login")
+            if(login == USER_GOOGLE){
+                var signIn : GPPSignIn = GPPSignIn.sharedInstance()
+                if(signIn.authentication == nil)
+                {
+                    signIn.shouldFetchGooglePlusUser = true;
+                    signIn.shouldFetchGoogleUserEmail = true;  // Uncomment to get the user's email
+                    
+                    // You previously set kClientId in the "Initialize the Google+ client" step
+                    let clientID = defaults.objectForKey(kUSER_USERID) as String
+                    signIn.clientID = clientID
+                    
+                    // Uncomment one of these two statements for the scope you chose in the previous step
+                    signIn.scopes.append(kGTLAuthScopePlusLogin);  // "https://www.googleapis.com/auth/plus.login" scope
+                    //signIn.scopes = @[ @"profile" ];             // "profile" scope
+                    
+                    if(signIn.trySilentAuthentication())
+                    {
+                        NSLog("Silent G+ login successful (initially)")
+                    }
+                    else
+                    {
+                        NSLog("G+ silent authentication failed.")
+                    }
+                }
+            }
+            
         }
         
         // De momento el login no es persistente
-        defaults.setObject(0, forKey: "Login")        
-        defaults.synchronize()
+        //defaults.setObject(0, forKey: "Login")
+        //defaults.synchronize()
         
         return true
     }

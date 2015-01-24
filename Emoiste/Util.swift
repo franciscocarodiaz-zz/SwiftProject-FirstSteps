@@ -10,12 +10,48 @@ import Foundation
 
 class Util {
     
+    
+    
+    class func userFromDefault() -> User {
+        
+        let user = User()
+        
+        var defaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
+        
+        if let userID = defaults.objectForKey(kUSER_USERID) as? Int {
+            user.userID =  "\(userID)"
+        } else {
+            user.userID = ""
+        }
+        if let nickName = defaults.objectForKey(kUSER_NICKNAME) as? String {
+            user.nickName =  nickName
+        } else {
+            user.nickName = ""
+        }
+        if let email = defaults.objectForKey(kUSER_EMAIL) as? String {
+            user.email =  email
+        } else {
+            user.email = ""
+        }
+        if let gender = defaults.objectForKey(kUSER_GENDER) as? String {
+            user.gender =  gender
+        } else {
+            user.gender = ""
+        }
+        if let picture = defaults.objectForKey(kUSER_PICTURE) as? String {
+            user.picture =  picture
+        } else {
+            user.picture = ""
+        }
+        return user
+    }
+    
     class func userToObject(dict: NSDictionary) -> User {
         
         let user = User()
         
-        if let userID = dict.objectForKey("userID") as? String {
-            user.userID =  userID
+        if let userID = dict.objectForKey("id") as? Int {
+            user.userID =  "\(userID)"
         } else {
             user.userID = ""
         }
