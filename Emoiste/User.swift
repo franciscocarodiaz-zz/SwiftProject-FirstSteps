@@ -48,4 +48,12 @@ class User {
     var followMeCount: String?
     
     init () {}
+    
+    init(userID:String, nickName:String, email:String, gender:String, picture:String){
+        self.userID = userID
+        self.nickName = nickName
+        self.email=email
+        self.gender = gender
+        self.picture = picture
+    }
 }

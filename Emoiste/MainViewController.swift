@@ -7,9 +7,14 @@
 //
 
 import UIKit
+import AddressBook
+import MediaPlayer
+import AssetsLibrary
+import CoreLocation
+import CoreMotion
 
-class MainViewController: UIViewController {
-
+class MainViewController: UIViewController, FBLoginViewDelegate {
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -21,12 +26,14 @@ class MainViewController: UIViewController {
         
         // Valores por defecto
         var defaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
-        if (defaults.objectForKey("Login") as Int == 0) {
+        if (defaults.objectForKey(kLOGIN) as Int == 0) {
             // Login
-            self.performSegueWithIdentifier("Login", sender: self)
+            self.performSegueWithIdentifier(VC_LOGIN, sender: self)
         } else {
+            let userDat  = Util.userFromDefault() as User
+            USER_DATA = userDat
             // Home
-            self.performSegueWithIdentifier("Home", sender: self)
+            self.performSegueWithIdentifier(VC_HOME, sender: self)
         }
     
     }

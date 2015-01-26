@@ -10,35 +10,79 @@ import Foundation
 
 class Util {
     
-    
-    
     class func userFromDefault() -> User {
+        
+        switch(TYPE_REGISTER_RRSS){
+        case USER_FACEBOOK:
+            return getFBUser()
+        case USER_GOOGLE:
+            return getGUser()
+        default:
+            return getFBUser()
+        }
+    }
+    
+    class func getFBUser() -> User {
         
         let user = User()
         
         var defaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
         
-        if let userID = defaults.objectForKey(kUSER_USERID) as? Int {
+        if let userID = defaults.objectForKey(kUSER_FB_USERID) as? String {
             user.userID =  "\(userID)"
         } else {
             user.userID = ""
         }
-        if let nickName = defaults.objectForKey(kUSER_NICKNAME) as? String {
+        if let nickName = defaults.objectForKey(kUSER_FB_NICKNAME) as? String {
             user.nickName =  nickName
         } else {
             user.nickName = ""
         }
-        if let email = defaults.objectForKey(kUSER_EMAIL) as? String {
+        if let email = defaults.objectForKey(kUSER_FB_EMAIL) as? String {
             user.email =  email
         } else {
             user.email = ""
         }
-        if let gender = defaults.objectForKey(kUSER_GENDER) as? String {
+        if let gender = defaults.objectForKey(kUSER_FB_GENDER) as? String {
             user.gender =  gender
         } else {
             user.gender = ""
         }
-        if let picture = defaults.objectForKey(kUSER_PICTURE) as? String {
+        if let picture = defaults.objectForKey(kUSER_FB_PICTURE) as? String {
+            user.picture =  picture
+        } else {
+            user.picture = ""
+        }
+        return user
+    }
+    
+    class func getGUser() -> User {
+        
+        let user = User()
+        
+        var defaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
+        
+        if let userID = defaults.objectForKey(kUSER_G_USERID) as? String {
+            user.userID =  "\(userID)"
+        } else {
+            user.userID = ""
+        }
+        if let nickName = defaults.objectForKey(kUSER_G_NICKNAME) as? String {
+            user.nickName =  nickName
+        } else {
+            user.nickName = ""
+        }
+        if let email = defaults.objectForKey(kUSER_G_EMAIL) as? String {
+            user.email =  email
+        } else {
+            user.email = ""
+        }
+        if let gender = defaults.objectForKey(kUSER_G_GENDER) as? String {
+            user.gender =  gender
+        } else {
+            user.gender = ""
+        }
+        if let picture = defaults.objectForKey(kUSER_G_PICTURE) as? String {
             user.picture =  picture
         } else {
             user.picture = ""
@@ -233,5 +277,6 @@ class Util {
         
         return user
     }
+    
     
 }

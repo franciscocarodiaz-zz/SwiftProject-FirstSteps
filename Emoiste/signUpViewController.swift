@@ -31,6 +31,14 @@ class signUpViewController: UIViewController, FBLoginViewDelegate, GPPSignInDele
         TYPE_REGISTER_RRSS = 1
         self.loginFB();
     }
+    
+    func loginViewFetchedUserInfo(loginView : FBLoginView!, user: FBGraphUser) {
+        println("User: \(user)")
+        println("User ID: \(user.objectID)")
+        println("User Name: \(user.name)")
+        var userEmail = user.objectForKey("email") as String
+        println("User Email: \(userEmail)")
+    }
 
     // Login Google+
     @IBAction func loginWithGoogle(sender: AnyObject) {
@@ -38,8 +46,8 @@ class signUpViewController: UIViewController, FBLoginViewDelegate, GPPSignInDele
         
         // Valores por defecto
         var defaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
-        if (defaults.objectForKey("Login") as Int == 3) {
-            self.performSegueWithIdentifier("Home", sender: self)
+        if (defaults.objectForKey(kLOGIN) as Int == 3) {
+            self.performSegueWithIdentifier(VC_HOME, sender: self)
         } else {
             signIn = GPPSignIn.sharedInstance()
             signIn?.shouldFetchGooglePlusUser = true
@@ -70,12 +78,12 @@ class signUpViewController: UIViewController, FBLoginViewDelegate, GPPSignInDele
     
     // Login cuenta
     @IBAction func loginAccount(sender: AnyObject) {
-        self.performSegueWithIdentifier("Login", sender: self)
+        self.performSegueWithIdentifier(VC_LOGIN, sender: self)
     }
 
     // Crear cuenta
     @IBAction func createAccount(sender: AnyObject) {
-        self.performSegueWithIdentifier("Registro", sender: self)
+        self.performSegueWithIdentifier(VC_REGISTER, sender: self)
     }
 
     // MARK: Facebook
@@ -114,6 +122,7 @@ class signUpViewController: UIViewController, FBLoginViewDelegate, GPPSignInDele
             alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default,handler: nil))
             self.presentViewController(alertController, animated: true, completion: nil)
         } else {
+            
             let code: NSString = DEFAULT_CODE
             let name = result.valueForKey("first_name")! as String
             let nickName = name.stringByReplacingOccurrencesOfString(" ", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
@@ -123,14 +132,16 @@ class signUpViewController: UIViewController, FBLoginViewDelegate, GPPSignInDele
             let notifications = true
             let socialNetwork = 1
             let country = DEFAULT_COUNTRY
-            /*let userImageURL = "https://graph.facebook.com/\(userFBID)/picture?type=small"
-            let url = NSURL (string: userImageURL)
+            let userFBID = result.valueForKey("id")! as NSString
+            let userImageURL = "https://graph.facebook.com/\(userFBID)/picture?type=small"
+            /*let url = NSURL (string: userImageURL)
             let imageData = NSData (contentsOfURL: url!)
             let image = UIImage(data: imageData!)
             profileImageView.image = image*/
             
+            NSUserDefaults.standardUserDefaults().setObject(userImageURL, forKey: kUSER_FB_PICTURE)
             // Registramos usuario en Backend
-            registerUser(code, nickName : nickName, email : email, password: password, country: country  , gender: gender, notifications: notifications, isBlogger: false, rememberMe: false, socialNetwork: socialNetwork)
+            registerUser(code, nickName : nickName, email : email, password: password, country: country  , gender: gender, notifications: notifications, isBlogger: false, rememberMe: false, socialNetwork: socialNetwork, idSocialNetwork:userFBID)
         }
     }
     
@@ -156,8 +167,10 @@ class signUpViewController: UIViewController, FBLoginViewDelegate, GPPSignInDele
             let id_token = parameters.objectForKey("id_token") as? String
             let access_token = parameters.objectForKey("access_token") as? String
             
-            let properties = auth.properties
-            var user_id = parameters.objectForKey("user_id") as? String
+            let properties = auth.properties as NSDictionary
+            let user_id = properties.objectForKey("user_id") as? String
+            
+            //var user_id = properties.objectForKey("user_id") as? String
             
             let code: NSString = DEFAULT_CODE
             let name = signIn?.googlePlusUser.displayName as String!
@@ -173,7 +186,8 @@ class signUpViewController: UIViewController, FBLoginViewDelegate, GPPSignInDele
             var rememberMe = false
             var isBlogger = false
             
-            self.registerUser(code, nickName: nickName, email: email, password: password, country: country, gender: gender, notifications: notifications, isBlogger: isBlogger, rememberMe: rememberMe, socialNetwork: socialNetwork)
+            //NSUserDefaults.standardUserDefaults().setObject(userImageURL, forKey: kUSER_PICTURE)
+            self.registerUser(code, nickName: nickName, email: email, password: password, country: country, gender: gender, notifications: notifications, isBlogger: isBlogger, rememberMe: rememberMe, socialNetwork: socialNetwork, idSocialNetwork:user_id!)
             
             // OPTION 1
             /*
@@ -239,7 +253,7 @@ class signUpViewController: UIViewController, FBLoginViewDelegate, GPPSignInDele
     
     
     // Registramos usuario en Backend
-    func registerUser(code: String, nickName: String, email: String, password: String, country: String, gender: String, notifications: Bool, isBlogger: Bool, rememberMe: Bool, socialNetwork:Int) {
+    func registerUser(code: String, nickName: String, email: String, password: String, country: String, gender: String, notifications: Bool, isBlogger: Bool, rememberMe: Bool, socialNetwork:Int, idSocialNetwork: String) {
         
         createLoader("Registrando usuario")
         
@@ -309,13 +323,32 @@ class signUpViewController: UIViewController, FBLoginViewDelegate, GPPSignInDele
         
         USER_DATA = userData
         
-        NSUserDefaults.standardUserDefaults().setInteger(TYPE_REGISTER_RRSS, forKey: kLOGIN)
-        NSUserDefaults.standardUserDefaults().setObject(userData.userID, forKey: kUSER_USERID)
-        NSUserDefaults.standardUserDefaults().setObject(userData.nickName, forKey: kUSER_NICKNAME)
-        NSUserDefaults.standardUserDefaults().setObject(userData.email, forKey: kUSER_EMAIL)
-        NSUserDefaults.standardUserDefaults().setObject(userData.gender, forKey: kUSER_GENDER)
-        NSUserDefaults.standardUserDefaults().setObject(userData.picture, forKey: kUSER_PICTURE)
-        NSUserDefaults.standardUserDefaults().synchronize()
+        var defaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
+        
+        if TYPE_REGISTER_RRSS == 1{
+            defaults.setInteger(TYPE_REGISTER_RRSS, forKey: kLOGIN)
+            defaults.setObject(userData.userID, forKey: kUSER_FB_USERID)
+            defaults.setObject(userData.nickName, forKey: kUSER_FB_NICKNAME)
+            defaults.setObject(userData.email, forKey: kUSER_FB_EMAIL)
+            defaults.setObject(userData.gender, forKey: kUSER_FB_GENDER)
+        }else if TYPE_REGISTER_RRSS == 3{
+            defaults.setInteger(TYPE_REGISTER_RRSS, forKey: kLOGIN)
+            defaults.setObject(userData.userID, forKey: kUSER_G_USERID)
+            defaults.setObject(userData.nickName, forKey: kUSER_G_NICKNAME)
+            defaults.setObject(userData.email, forKey: kUSER_G_EMAIL)
+            defaults.setObject(userData.gender, forKey: kUSER_G_GENDER)
+            defaults.setObject(userData.picture, forKey: kUSER_G_PICTURE)
+        }else{
+            defaults.setInteger(TYPE_REGISTER_RRSS, forKey: kLOGIN)
+            defaults.setObject(userData.userID, forKey: kUSER_USERID)
+            defaults.setObject(userData.nickName, forKey: kUSER_NICKNAME)
+            defaults.setObject(userData.email, forKey: kUSER_EMAIL)
+            defaults.setObject(userData.gender, forKey: kUSER_GENDER)
+            defaults.setObject(userData.picture, forKey: kUSER_G_PICTURE)
+        }
+        
+        defaults.setObject(TYPE_REGISTER_RRSS, forKey: kLOGIN)
+        defaults.synchronize()
         
         self.performSegueWithIdentifier(navigation, sender: self)
     }
@@ -347,7 +380,7 @@ class signUpViewController: UIViewController, FBLoginViewDelegate, GPPSignInDele
                     NSUserDefaults.standardUserDefaults().synchronize()
                     
                     // Home
-                    self.performSegueWithIdentifier("Home", sender: self)
+                    self.performSegueWithIdentifier(VC_HOME, sender: self)
                 } else {
                     self.dataUserFailed(social)
                 }

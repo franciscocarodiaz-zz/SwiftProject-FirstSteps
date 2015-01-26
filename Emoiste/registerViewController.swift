@@ -220,10 +220,10 @@ class registerViewController: UIViewController, UITextFieldDelegate {
                     USER_DATA = userDat
                     // Activamos el Login (999-cuenta)
                     var defaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
-                    defaults.setObject(999, forKey: "Login")
+                    defaults.setObject(999, forKey: kLOGIN)
                     defaults.synchronize()
                     // Home
-                    self.performSegueWithIdentifier("Home", sender: self)
+                    self.performSegueWithIdentifier(VC_HOME, sender: self)
                 } else {
                     self.dataUserFailed()
                 }

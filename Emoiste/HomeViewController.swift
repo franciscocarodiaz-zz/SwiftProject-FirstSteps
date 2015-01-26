@@ -16,11 +16,7 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         
         var defaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
-        let typeLogin = defaults.objectForKey("Login") as Int
-        let nickName = defaults.objectForKey(kUSER_NICKNAME) as String
-        let email = defaults.objectForKey(kUSER_EMAIL) as String
         var texto = "Nick Name: \(USER_DATA.nickName!)\nEmail: \(USER_DATA.email!)"
-        //var texto = "Nick Name: \(nickName)\nEmail: \(email)"
         userTextView.text = texto
         
     }
@@ -30,10 +26,10 @@ class HomeViewController: UIViewController {
     @IBAction func logout(sender: AnyObject) {
         var defaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
         // Login: 0-no login
-        defaults.setObject(0, forKey: "Login")
+        defaults.setObject(0, forKey: kLOGIN)
         defaults.synchronize()
         // Login
-        self.performSegueWithIdentifier("Login", sender: self)
+        self.performSegueWithIdentifier(VC_LOGIN, sender: self)
     }
     
     override func didReceiveMemoryWarning() {

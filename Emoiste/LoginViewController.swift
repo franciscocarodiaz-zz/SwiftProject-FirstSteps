@@ -120,7 +120,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         jsonResponseSerializer.stringEncoding = NSUTF8StringEncoding
         manager.responseSerializer = jsonResponseSerializer
         
-        manager.POST("login",
+        manager.POST(REQUEST_LOGIN,
             parameters: params,
             success: { (operation: AFHTTPRequestOperation!, responseObject: AnyObject!) in
                 //println(responseObject.description)
@@ -150,10 +150,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                     USER_DATA = userDat
                     // Activamos el Login (999-cuenta)
                     var defaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
-                    defaults.setObject(999, forKey: "Login")
+                    defaults.setObject(999, forKey: kLOGIN)
                     defaults.synchronize()
                     // Home
-                    self.performSegueWithIdentifier("Home", sender: self)
+                    self.performSegueWithIdentifier(VC_HOME, sender: self)
                 } else {
                     self.dataUserFailed()
                 }
