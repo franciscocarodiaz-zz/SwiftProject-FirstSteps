@@ -13,7 +13,6 @@
 		3B64B3FA1A6D158600BB0090 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B64B3F91A6D158600BB0090 /* Util.swift */; };
 		3B738E9B1A6E6F4900DFF0F8 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B738E9A1A6E6F4900DFF0F8 /* LoginViewController.swift */; };
 		3B8E43411A6950AA00BC1654 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8E43401A6950AA00BC1654 /* User.swift */; };
-		3BFC19B31A6811FE002E2B96 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BFC19B21A6811FE002E2B96 /* FacebookSDK.framework */; };
 		3BFC19CD1A681586002E2B96 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BFC19BB1A681586002E2B96 /* AFHTTPRequestOperation.m */; };
 		3BFC19CE1A681586002E2B96 /* AFHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BFC19BD1A681586002E2B96 /* AFHTTPRequestOperationManager.m */; };
 		3BFC19CF1A681586002E2B96 /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BFC19BF1A681586002E2B96 /* AFHTTPSessionManager.m */; };
@@ -32,6 +31,10 @@
 		3BFC19EE1A6815A2002E2B96 /* UIRefreshControl+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BFC19E51A6815A2002E2B96 /* UIRefreshControl+AFNetworking.m */; };
 		3BFC19EF1A6815A2002E2B96 /* UIWebView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BFC19E71A6815A2002E2B96 /* UIWebView+AFNetworking.m */; };
 		3BFC19F31A6817BC002E2B96 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BFC19F21A6817BC002E2B96 /* MBProgressHUD.m */; };
+		3EB739C21A78D41D0082F691 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EB739C11A78D41D0082F691 /* FacebookSDK.framework */; };
+		3EB739C41A78D5DD0082F691 /* FBUserHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB739C31A78D5DD0082F691 /* FBUserHelper.swift */; };
+		3EB739C61A78DB940082F691 /* AlbumModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB739C51A78DB940082F691 /* AlbumModel.swift */; };
+		3ED2D89B1A79270300C0EA36 /* GoogleUserHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED2D89A1A79270300C0EA36 /* GoogleUserHelper.swift */; };
 		81F1B0161A5C736800A013A7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F1B0151A5C736800A013A7 /* AppDelegate.swift */; };
 		81F1B01B1A5C736800A013A7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81F1B0191A5C736800A013A7 /* Main.storyboard */; };
 		81F1B01D1A5C736800A013A7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81F1B01C1A5C736800A013A7 /* Images.xcassets */; };
@@ -80,7 +83,6 @@
 		3B64B3F91A6D158600BB0090 /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		3B738E9A1A6E6F4900DFF0F8 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		3B8E43401A6950AA00BC1654 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		3BFC19B21A6811FE002E2B96 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../../../../../../Documents/FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
 		3BFC19BA1A681586002E2B96 /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
 		3BFC19BB1A681586002E2B96 /* AFHTTPRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPRequestOperation.m; sourceTree = "<group>"; };
 		3BFC19BC1A681586002E2B96 /* AFHTTPRequestOperationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperationManager.h; sourceTree = "<group>"; };
@@ -119,6 +121,10 @@
 		3BFC19E71A6815A2002E2B96 /* UIWebView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWebView+AFNetworking.m"; sourceTree = "<group>"; };
 		3BFC19F11A6817BC002E2B96 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		3BFC19F21A6817BC002E2B96 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		3EB739C11A78D41D0082F691 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../../Documents/FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
+		3EB739C31A78D5DD0082F691 /* FBUserHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FBUserHelper.swift; sourceTree = "<group>"; };
+		3EB739C51A78DB940082F691 /* AlbumModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlbumModel.swift; sourceTree = "<group>"; };
+		3ED2D89A1A79270300C0EA36 /* GoogleUserHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleUserHelper.swift; sourceTree = "<group>"; };
 		81F1B0101A5C736800A013A7 /* Emoiste.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Emoiste.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		81F1B0141A5C736800A013A7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		81F1B0151A5C736800A013A7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -160,6 +166,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3EB739C21A78D41D0082F691 /* FacebookSDK.framework in Frameworks */,
 				BDAC90031A5EDE700017A895 /* libsqlite3.dylib in Frameworks */,
 				BDAC90011A5EDE620017A895 /* libz.dylib in Frameworks */,
 				BDAC8FFF1A5EDE580017A895 /* SystemConfiguration.framework in Frameworks */,
@@ -180,7 +187,6 @@
 				BDA0BDA11A5D2A1F00D312DD /* AddressBook.framework in Frameworks */,
 				BDA0BD991A5D1CFB00D312DD /* GoogleOpenSource.framework in Frameworks */,
 				BDA0BD9D1A5D1D1800D312DD /* GooglePlus.framework in Frameworks */,
-				3BFC19B31A6811FE002E2B96 /* FacebookSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -198,6 +204,9 @@
 			isa = PBXGroup;
 			children = (
 				3B8E43401A6950AA00BC1654 /* User.swift */,
+				3EB739C31A78D5DD0082F691 /* FBUserHelper.swift */,
+				3EB739C51A78DB940082F691 /* AlbumModel.swift */,
+				3ED2D89A1A79270300C0EA36 /* GoogleUserHelper.swift */,
 			);
 			name = User;
 			sourceTree = "<group>";
@@ -229,6 +238,7 @@
 		3BFC19B51A681231002E2B96 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3EB739C11A78D41D0082F691 /* FacebookSDK.framework */,
 				BDAC90021A5EDE700017A895 /* libsqlite3.dylib */,
 				BDAC90001A5EDE620017A895 /* libz.dylib */,
 				BDAC8FFE1A5EDE580017A895 /* SystemConfiguration.framework */,
@@ -256,7 +266,6 @@
 				3BFC19F01A6817AA002E2B96 /* MBProgressHUD */,
 				3BFC19D61A6815A2002E2B96 /* UIKit+AFNetworking */,
 				3BFC19B91A681586002E2B96 /* AFNetworking */,
-				3BFC19B21A6811FE002E2B96 /* FacebookSDK.framework */,
 				BDAC8FEC1A5EDA5A0017A895 /* Parse.framework */,
 				BDA0BD9C1A5D1D1800D312DD /* GooglePlus.framework */,
 				BDA0BD9A1A5D1D0C00D312DD /* GooglePlus.bundle */,
@@ -534,6 +543,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3B738E9B1A6E6F4900DFF0F8 /* LoginViewController.swift in Sources */,
+				3EB739C61A78DB940082F691 /* AlbumModel.swift in Sources */,
 				3B64B3F61A6CEE2700BB0090 /* HomeViewController.swift in Sources */,
 				3BFC19ED1A6815A2002E2B96 /* UIProgressView+AFNetworking.m in Sources */,
 				3BFC19EB1A6815A2002E2B96 /* UIButton+AFNetworking.m in Sources */,
@@ -546,12 +556,14 @@
 				3BFC19CE1A681586002E2B96 /* AFHTTPRequestOperationManager.m in Sources */,
 				3B64B3FA1A6D158600BB0090 /* Util.swift in Sources */,
 				3BFC19D21A681586002E2B96 /* AFURLConnectionOperation.m in Sources */,
+				3ED2D89B1A79270300C0EA36 /* GoogleUserHelper.swift in Sources */,
 				3BFC19EC1A6815A2002E2B96 /* UIImageView+AFNetworking.m in Sources */,
 				3BFC19CD1A681586002E2B96 /* AFHTTPRequestOperation.m in Sources */,
 				3BFC19E91A6815A2002E2B96 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				BDA0BDAB1A5D8B3D00D312DD /* signUpViewController.swift in Sources */,
 				3BFC19D31A681586002E2B96 /* AFURLRequestSerialization.m in Sources */,
 				3BFC19CF1A681586002E2B96 /* AFHTTPSessionManager.m in Sources */,
+				3EB739C41A78D5DD0082F691 /* FBUserHelper.swift in Sources */,
 				3B64B3F31A6CEA6C00BB0090 /* MainViewController.swift in Sources */,
 				3BFC19F31A6817BC002E2B96 /* MBProgressHUD.m in Sources */,
 				3BFC19D01A681586002E2B96 /* AFNetworkReachabilityManager.m in Sources */,
@@ -703,6 +715,7 @@
 					"$(PROJECT_DIR)/Emoiste",
 					/Users/davidhevillagarcia/Documents/FacebookSDK,
 					/Users/jmholm/Documents/FacebookSDK,
+					/Users/franciscocarodiaz/Documents/FacebookSDK,
 				);
 				INFOPLIST_FILE = Emoiste/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -726,6 +739,7 @@
 					"$(PROJECT_DIR)/Emoiste",
 					/Users/davidhevillagarcia/Documents/FacebookSDK,
 					/Users/jmholm/Documents/FacebookSDK,
+					/Users/franciscocarodiaz/Documents/FacebookSDK,
 				);
 				INFOPLIST_FILE = Emoiste/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

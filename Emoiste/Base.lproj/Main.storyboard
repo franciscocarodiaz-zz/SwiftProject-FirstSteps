@@ -200,6 +200,7 @@
                     <value key="contentSizeForViewInPopover" type="size" width="1024" height="768"/>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <connections>
+                        <outlet property="fbButton" destination="GnY-5v-30N" id="q2F-cE-gdb"/>
                         <segue destination="jCP-2l-Pe9" kind="modal" identifier="Home" modalTransitionStyle="crossDissolve" id="VGH-r6-rRA"/>
                         <segue destination="SDk-dZ-LNt" kind="modal" identifier="Registro" modalTransitionStyle="crossDissolve" id="xej-T2-bVS"/>
                         <segue destination="qpP-vn-RVc" kind="modal" identifier="Login" modalTransitionStyle="crossDissolve" id="ez2-lq-zs8"/>
@@ -557,7 +558,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NDX-PS-hi5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1123" y="264"/>
+            <point key="canvasLocation" x="1123" y="256"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="XdI-rD-JLu">
@@ -595,7 +596,7 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="kqe-gy-00K"/>
+        <segue reference="vBB-Ar-Dvl"/>
         <segue reference="VGH-r6-rRA"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -10,50 +10,51 @@ import Foundation
 import UIKit
 
 class User {
-    var userID : String?
-    var nickName : String?
-    var email: String?
-    var fullName: String?
-    var country: String?
-    var gender: String?
-    var myStyle: String?
-    var isBlogger: String?
-    var rememberMe: String?
-    var picture: String?
-    var aboutYou: String?
-    var location: String?
-    var birthDate: String?
-    var notifications: String?
-    var blog: String?
-    var loginFacebook: String?
-    var loginGPlus: String?
-    var twitter: String?
-    var created: String?
-    var userType: String?
-    var deviceType: String?
-    var deviceOS: String?
-    var sessionRemember: String?
-    var notiNewFollowMe: String?
-    var notiCommentMyTimeline: String?
-    var notiShareWithMe: String?
-    var notiTrendsetterAddNewItem: String?
-    var notiNewTrendsetter: String?
-    var notiBrandHasNewItem: String?
-    var notiNewBrand: String?
-    var pasosConfiguracion: String?
-    var userTypeDesc: String?
-    var genderDesc: String?
-    var activateDesc: String?
-    var influencerName: String?
-    var followMeCount: String?
+    var userID:AnyObject = "";
+    var nickName:AnyObject = "";
+    var email:AnyObject = "";
+    var fullName:AnyObject = "";
+    var country:AnyObject = "";
+    var gender:AnyObject = "";
+    var myStyle:AnyObject = "";
+    var isBlogger:AnyObject = "";
+    var rememberMe:AnyObject = "";
+    var picture:AnyObject = "";
+    var aboutYou:AnyObject = "";
+    var location:AnyObject = "";
+    var birthDate:AnyObject = "";
+    var notifications:AnyObject = "";
+    var blog:AnyObject = "";
+    var loginFacebook:AnyObject = "";
+    var loginGPlus:AnyObject = "";
+    var twitter:AnyObject = "";
+    var created:AnyObject = "";
+    var userType:AnyObject = "";
+    var deviceType:AnyObject = "";
+    var deviceOS:AnyObject = "";
+    var sessionRemember:AnyObject = "";
+    var notiNewFollowMe:AnyObject = "";
+    var notiCommentMyTimeline:AnyObject = "";
+    var notiShareWithMe:AnyObject = "";
+    var notiTrendsetterAddNewItem:AnyObject = "";
+    var notiNewTrendsetter:AnyObject = "";
+    var notiBrandHasNewItem:AnyObject = "";
+    var notiNewBrand:AnyObject = "";
+    var pasosConfiguracion:AnyObject = "";
+    var userTypeDesc:AnyObject = "";
+    var genderDesc:AnyObject = "";
+    var activateDesc:AnyObject = "";
+    var influencerName:AnyObject = "";
+    var followMeCount:AnyObject = "";
     
-    init () {}
+    init(){}
     
-    init(userID:String, nickName:String, email:String, gender:String, picture:String){
+    init(userID:AnyObject, nickName:AnyObject, email:AnyObject, gender:AnyObject, picture:AnyObject){
         self.userID = userID
         self.nickName = nickName
         self.email=email
         self.gender = gender
         self.picture = picture
     }
+    
 }

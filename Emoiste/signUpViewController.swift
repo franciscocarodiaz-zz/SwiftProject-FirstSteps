@@ -17,49 +17,58 @@ import CoreMotion
 class signUpViewController: UIViewController, FBLoginViewDelegate, GPPSignInDelegate {
 
     // Google+
-    var signIn : GPPSignIn?
+    let googleHelper = GoogleUserHelper();
+    var signIn:GPPSignIn?;
+    
+    // Facebook
+    let fbHelper = FBUserHelper();
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("executeHandleFBUser:"), name: NOTIFICATION_FACEBOOK_LOGIN, object: nil);
+        
+        var defaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
+        if (defaults.objectForKey(kUSER_LOGIN_FACEBOOK) != nil && defaults.objectForKey(kUSER_LOGIN_FACEBOOK) as Int == USER_FACEBOOK) {
+            //println("Usuario logueado con Facebook. Modificar string en boton Sign Up.");
+            //fbButton .setTitle("Login with Facebook", forState: UIControlState.Normal)
+        }
+        if (defaults.objectForKey(kUSER_LOGIN_GOOGLE) != nil && defaults.objectForKey(kUSER_LOGIN_GOOGLE) as Int == USER_GOOGLE) {
+            //println("Usuario logueado con Google. Modificar string en boton Sign Up.");
+            //fbButton .setTitle("Login with Google+", forState: UIControlState.Normal)
+        }
+        
     }
     
+    override func viewDidDisappear(animated: Bool) {
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: NOTIFICATION_FACEBOOK_LOGIN, object: nil);
+    }
+    
+    @IBOutlet weak var fbButton: UIButton!
     // MARK: IBAction
     
     // Login Facebook
     @IBAction func loginFacebook(sender: AnyObject) {
-        TYPE_REGISTER_RRSS = 1
-        self.loginFB();
-    }
-    
-    func loginViewFetchedUserInfo(loginView : FBLoginView!, user: FBGraphUser) {
-        println("User: \(user)")
-        println("User ID: \(user.objectID)")
-        println("User Name: \(user.name)")
-        var userEmail = user.objectForKey("email") as String
-        println("User Email: \(userEmail)")
+        TYPE_REGISTER_RRSS = USER_FACEBOOK
+        
+        fbHelper.login();
     }
 
     // Login Google+
     @IBAction func loginWithGoogle(sender: AnyObject) {
-        TYPE_REGISTER_RRSS = 3
+        TYPE_REGISTER_RRSS = USER_GOOGLE
         
-        // Valores por defecto
-        var defaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
-        if (defaults.objectForKey(kLOGIN) as Int == 3) {
-            self.performSegueWithIdentifier(VC_HOME, sender: self)
-        } else {
-            signIn = GPPSignIn.sharedInstance()
-            signIn?.shouldFetchGooglePlusUser = true
-            signIn?.shouldFetchGoogleUserID = true
-            signIn?.shouldFetchGoogleUserEmail = true
-            signIn?.clientID = GOOGLE_CLIENT_ID
-            signIn?.scopes = [kGTLAuthScopePlusLogin]
-            signIn?.delegate = self
-            signIn?.authenticate()
-        }
+        //googleHelper.signIn?.delegate = self
+        //googleHelper.login();
         
-        
+        signIn = GPPSignIn.sharedInstance()
+        signIn?.shouldFetchGooglePlusUser = true
+        signIn?.shouldFetchGoogleUserID = true
+        signIn?.shouldFetchGoogleUserEmail = true
+        signIn?.clientID = GOOGLE_CLIENT_ID
+        signIn?.scopes = [kGTLAuthScopePlusLogin]
+        signIn?.delegate = self
+        signIn?.authenticate()
     }
     
     // Login Twitter
@@ -88,61 +97,27 @@ class signUpViewController: UIViewController, FBLoginViewDelegate, GPPSignInDele
 
     // MARK: Facebook
     
-    func loginFB() {
-        // Comprobamos si el token está en caché para iniciar sesión sin UI
-        if FBSession.activeSession().state == FBSessionState.CreatedTokenLoaded {
-            FBSession.openActiveSessionWithReadPermissions(["public_profile", "publish_actions", "email"], allowLoginUI: false, completionHandler: {
-                (session, state, error) -> Void in
-                self.fbHandler(session, state: state, error: error)
-            })
-        } else {
-            // Iniciar sesión con UI
-            FBSession.openActiveSessionWithReadPermissions(["public_profile", "publish_actions", "email"], allowLoginUI: true, completionHandler: {
-                (session:FBSession!, state:FBSessionState, error:NSError!) in
-                self.fbHandler(session, state: state, error: error)
-            })
-        }
-    }
-    
-    func fbHandler(session:FBSession!, state:FBSessionState, error:NSError!) {
-        if let gotError = error {
-            let alertController = UIAlertController(title: "Atención", message:
-                "No se ha podido iniciar sesión con Facebook", preferredStyle: UIAlertControllerStyle.Alert)
-            alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default,handler: nil))
-            self.presentViewController(alertController, animated: true, completion: nil)
-        } else {
-            FBRequest.requestForMe()?.startWithCompletionHandler(self.fbRequestCompletionHandler);
-        }
-    }
-    
-    func fbRequestCompletionHandler(connection:FBRequestConnection!, result:AnyObject!, error:NSError!) {
-        if let gotError = error {
-            let alertController = UIAlertController(title: "Atención", message:
-                "No se ha podido iniciar sesion con Facebook", preferredStyle: UIAlertControllerStyle.Alert)
-            alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default,handler: nil))
-            self.presentViewController(alertController, animated: true, completion: nil)
-        } else {
+    func executeHandleFBUser(notification:NSNotification){
+        
+        // 1. Save user data
+        let userData = notification.object as User;
+        
+        // 2. Save type of user
+        var defaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
+        defaults.setObject(TYPE_REGISTER_RRSS, forKey: kLOGIN)
+        defaults.synchronize()
+        
+        if (defaults.objectForKey(kUSER_LOGIN_FACEBOOK) != nil && defaults.objectForKey(kUSER_LOGIN_FACEBOOK) as Int == USER_FACEBOOK) {
+            // Llamada a API para comprobar loginSocial
+            USER_DATA = userData
+            USER_DATA.loginFacebook = true
             
-            let code: NSString = DEFAULT_CODE
-            let name = result.valueForKey("first_name")! as String
-            let nickName = name.stringByReplacingOccurrencesOfString(" ", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
-            let email : NSString = result.valueForKey("email")! as NSString
-            let password = result.valueForKey("id")! as NSString
-            let gender = result.valueForKey("gender")! as NSString
-            let notifications = true
-            let socialNetwork = 1
-            let country = DEFAULT_COUNTRY
-            let userFBID = result.valueForKey("id")! as NSString
-            let userImageURL = "https://graph.facebook.com/\(userFBID)/picture?type=small"
-            /*let url = NSURL (string: userImageURL)
-            let imageData = NSData (contentsOfURL: url!)
-            let image = UIImage(data: imageData!)
-            profileImageView.image = image*/
-            
-            NSUserDefaults.standardUserDefaults().setObject(userImageURL, forKey: kUSER_FB_PICTURE)
-            // Registramos usuario en Backend
-            registerUser(code, nickName : nickName, email : email, password: password, country: country  , gender: gender, notifications: notifications, isBlogger: false, rememberMe: false, socialNetwork: socialNetwork, idSocialNetwork:userFBID)
+            self.navigateTo(VC_HOME)
+        }else{
+            // 3. Register user and go to Home screen
+            self.registerUser(userData)
         }
+        
     }
     
     //MARK: Google+
@@ -151,137 +126,90 @@ class signUpViewController: UIViewController, FBLoginViewDelegate, GPPSignInDele
         
         if let gotError = error {
             
-            let alertController = UIAlertController(
-                title: "Atención",
-                message: "No se ha podido iniciar sesión con Google+",
-                preferredStyle: UIAlertControllerStyle.Alert)
-            
-            alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default,handler: nil))
-            
+            let _title = "Atención"
+            var _message = "No se ha podido iniciar sesion con Google+"
+            let alertController = Util.showMessage(_title,message: _message)
             self.presentViewController(alertController, animated: true, completion: nil)
             
         } else {
             
+            // 1. Save user data
             let cliendId = auth.clientID
             let parameters = auth.parameters
             let id_token = parameters.objectForKey("id_token") as? String
             let access_token = parameters.objectForKey("access_token") as? String
-            
             let properties = auth.properties as NSDictionary
-            let user_id = properties.objectForKey("user_id") as? String
-            
-            //var user_id = properties.objectForKey("user_id") as? String
-            
-            let code: NSString = DEFAULT_CODE
+            let user_id = properties.objectForKey("user_id") as String!
             let name = signIn?.googlePlusUser.displayName as String!
             let nickName = name.stringByReplacingOccurrencesOfString(" ", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
             let email : NSString = auth.userEmail
-            let password = signIn?.googlePlusUser.identifier as String!
             let gender = signIn?.googlePlusUser.gender as String!
-            let notifications = true
-            let socialNetwork = 3
+            let userImageURL = signIn?.googlePlusUser.image.url as String!
             
-            // Registramos usuario en Backend
-            let country = "United States"
-            var rememberMe = false
-            var isBlogger = false
+            var userData = User(userID: user_id, nickName: nickName, email: email, gender:gender,picture:userImageURL);
             
-            //NSUserDefaults.standardUserDefaults().setObject(userImageURL, forKey: kUSER_PICTURE)
-            self.registerUser(code, nickName: nickName, email: email, password: password, country: country, gender: gender, notifications: notifications, isBlogger: isBlogger, rememberMe: rememberMe, socialNetwork: socialNetwork, idSocialNetwork:user_id!)
-            
-            // OPTION 1
-            /*
+            // 2. Save type of user
             var defaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
-            var existUserInBD  = false
-            if existUserInBD {
-                // SI el usuario existe en nuestra base de datos no haremos el registro
-                
-                /*
-                let loadingHUD = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                loadingHUD.mode = MBProgressHUDModeIndeterminate
-                loadingHUD.labelText = "Comprobando cuenta"
-                
-                let path = PATH_WS_USER;
-                let baseURL = NSURL(string: path)
-                
-                var defaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
-                var userId = defaults.objectForKey(kUSER_USERID) as String
-                var params = [
-                "userId" : userId
-                ]
-                
-                let manager = AFHTTPRequestOperationManager(baseURL: baseURL)
-                let jsonResponseSerializer = AFJSONResponseSerializer()
-                jsonResponseSerializer.stringEncoding = NSUTF8StringEncoding
-                manager.responseSerializer = jsonResponseSerializer
-                
-                manager.POST("getToken",
-                parameters: params,
-                success: { (operation: AFHTTPRequestOperation!, responseObject: AnyObject!) in
-                MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
-                if (responseObject != nil) {
-                self.dataUserLoaded(responseObject, social: socialNetwork)
-                } else {
-                // Registramos usuario normal en Backend
-                self.registerUser(code, nickName: nickName, email: email, password: password, country: country, gender: gender, notifications: notifications, isBlogger: isBlogger, rememberMe: rememberMe, socialNetwork: socialNetwork)
-                }
-                },
-                failure: { (operation: AFHTTPRequestOperation!, error: NSError!) in
-                self.dataUserFailed(socialNetwork)
-                }
-                )
-                */
-            }else{
-                self.registerUser(code, nickName: nickName, email: email, password: password, country: country, gender: gender, notifications: notifications, isBlogger: isBlogger, rememberMe: rememberMe, socialNetwork: socialNetwork)
-            }
-           */
+            defaults.setObject(TYPE_REGISTER_RRSS, forKey: kLOGIN)
+            defaults.synchronize()
             
+            if (defaults.objectForKey(kUSER_LOGIN_GOOGLE) != nil && defaults.objectForKey(kUSER_LOGIN_GOOGLE) as Int == USER_GOOGLE) {
+                // Llamada a API para comprobar loginSocial
+                USER_DATA = userData
+                USER_DATA.loginGPlus = true
+                
+                self.navigateTo(VC_HOME)
+            }else{
+                // 3. Register user and go to Home screen
+                self.registerUser(userData)
+            }
             
         }
     }
     
     func didDisconnectWithError(error: NSError!) {
-        let alertController = UIAlertController(
-            title: "Atención",
-            message: "No se ha podido iniciar sesión con Google+",
-            preferredStyle: UIAlertControllerStyle.Alert)
         
-        alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default,handler: nil))
-        
+        let _title = "Atención"
+        var _message = "No se ha podido iniciar sesion con Google"
+        let alertController = Util.showMessage(_title,message: _message)
         self.presentViewController(alertController, animated: true, completion: nil)
     }
     
-    
     // Registramos usuario en Backend
-    func registerUser(code: String, nickName: String, email: String, password: String, country: String, gender: String, notifications: Bool, isBlogger: Bool, rememberMe: Bool, socialNetwork:Int, idSocialNetwork: String) {
+    func registerUser(userData: User) {
         
         createLoader("Registrando usuario")
         
+        var params = [
+            "code" : DEFAULT_CODE,
+            "nickName" : userData.nickName,
+            "email" : userData.email,
+            "password" : userData.userID,
+            "country" : userData.country,
+            "gender" : userData.gender,
+            "isBlogger" : userData.isBlogger,
+            "rememberMe" : userData.rememberMe,
+            "notifications" : userData.notifications,
+            "socialNetwork" : TYPE_REGISTER_RRSS
+        ]
+        
+        self.callManager("register", parameters: params)
+        
+    }
+    
+    func callManager(method: String, parameters: AnyObject){
+        
         let path = PATH_WS_USER;
         let baseURL = NSURL(string: path)
-        
-        var params = [
-            "code" : code,
-            "nickName" : nickName,
-            "email" : email,
-            "password" : password,
-            "country" : country,
-            "gender" : gender,
-            "isBlogger" : isBlogger,
-            "rememberMe" : rememberMe,
-            "notifications" : notifications,
-            "socialNetwork" : socialNetwork
-        ]
         
         let manager = AFHTTPRequestOperationManager(baseURL: baseURL)
         let jsonResponseSerializer = AFJSONResponseSerializer()
         jsonResponseSerializer.stringEncoding = NSUTF8StringEncoding
         manager.responseSerializer = jsonResponseSerializer
         
-        manager.POST("register",
-            parameters: params,
+        manager.POST(method,
+            parameters: parameters,
             success: { (operation: AFHTTPRequestOperation!, responseObject: AnyObject!) in
-                MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
                 
                 if (responseObject != nil) {
                     if let responseDict = responseObject.objectForKey(WS_RESPONSE_ELEMENT_RESULT) as? NSDictionary {
@@ -292,21 +220,31 @@ class signUpViewController: UIViewController, FBLoginViewDelegate, GPPSignInDele
                         if ws_response_status == WS_RESPONSE_STATUS_OK {
                             let dataUser = responseObject.objectForKey(WS_RESPONSE_ELEMENT_DATA) as? NSDictionary
                             let userDat  = Util.userToObject(dataUser!) as User
-                            self.navigateTo(VC_HOME,userData: userDat)
-                        } else if ws_response_status == WS_RESPONSE_STATUS_KO && ws_response_msg == WS_RESPONSE_STATUS_KO_MSG_1 {
-                            let userDat  = Util.userFromDefault() as User
-                            self.navigateTo(VC_HOME,userData: userDat)
-                        } else if ws_response_status == WS_RESPONSE_STATUS_KO && ws_response_msg == WS_RESPONSE_STATUS_KO_MSG_2 {
-                            let userDat  = Util.userFromDefault() as User
-                            self.navigateTo(VC_HOME,userData: userDat)
+                            USER_DATA = userDat
+                            
+                            var defaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
+                            if TYPE_REGISTER_RRSS == USER_FACEBOOK{
+                                USER_DATA.loginFacebook = true
+                                defaults.setObject(USER_FACEBOOK, forKey: kUSER_LOGIN_FACEBOOK)
+                            }else if TYPE_REGISTER_RRSS == USER_GOOGLE{
+                                USER_DATA.loginGPlus = true
+                                defaults.setObject(USER_GOOGLE, forKey: kUSER_LOGIN_GOOGLE)
+                            }
+                            if method == "register"{
+                                defaults.setObject(0, forKey: kTUTORIAL)
+                            }
+                            defaults.synchronize()
+                            
+                            self.navigateTo(VC_HOME)
+                            
                         }
                     }
                 } else {
-                    self.dataUserFailed(socialNetwork)
+                    self.dataUserFailed(TYPE_REGISTER_RRSS)
                 }
             },
             failure: { (operation: AFHTTPRequestOperation!, error: NSError!) in
-                 self.dataUserFailed(socialNetwork)
+                self.dataUserFailed(TYPE_REGISTER_RRSS)
             }
         )
     }
@@ -318,90 +256,10 @@ class signUpViewController: UIViewController, FBLoginViewDelegate, GPPSignInDele
     }
     
     //MARK: Registro Backend
-    func navigateTo(navigation: String, userData: User) {
+    func navigateTo(navigation: String) {
         MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
-        
-        USER_DATA = userData
-        
-        var defaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
-        
-        if TYPE_REGISTER_RRSS == 1{
-            defaults.setInteger(TYPE_REGISTER_RRSS, forKey: kLOGIN)
-            defaults.setObject(userData.userID, forKey: kUSER_FB_USERID)
-            defaults.setObject(userData.nickName, forKey: kUSER_FB_NICKNAME)
-            defaults.setObject(userData.email, forKey: kUSER_FB_EMAIL)
-            defaults.setObject(userData.gender, forKey: kUSER_FB_GENDER)
-        }else if TYPE_REGISTER_RRSS == 3{
-            defaults.setInteger(TYPE_REGISTER_RRSS, forKey: kLOGIN)
-            defaults.setObject(userData.userID, forKey: kUSER_G_USERID)
-            defaults.setObject(userData.nickName, forKey: kUSER_G_NICKNAME)
-            defaults.setObject(userData.email, forKey: kUSER_G_EMAIL)
-            defaults.setObject(userData.gender, forKey: kUSER_G_GENDER)
-            defaults.setObject(userData.picture, forKey: kUSER_G_PICTURE)
-        }else{
-            defaults.setInteger(TYPE_REGISTER_RRSS, forKey: kLOGIN)
-            defaults.setObject(userData.userID, forKey: kUSER_USERID)
-            defaults.setObject(userData.nickName, forKey: kUSER_NICKNAME)
-            defaults.setObject(userData.email, forKey: kUSER_EMAIL)
-            defaults.setObject(userData.gender, forKey: kUSER_GENDER)
-            defaults.setObject(userData.picture, forKey: kUSER_G_PICTURE)
-        }
-        
-        defaults.setObject(TYPE_REGISTER_RRSS, forKey: kLOGIN)
-        defaults.synchronize()
         
         self.performSegueWithIdentifier(navigation, sender: self)
-    }
-    
-    func dataUserLoaded(responseObject: AnyObject, social: Int) {
-        MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
-        
-        if let responseDict = responseObject.objectForKey(WS_RESPONSE_ELEMENT_RESULT) as? NSDictionary {
-            
-            let ws_response_status = responseDict.objectForKey(WS_RESPONSE_ELEMENT_RESULT_STATUS) as? String
-            let ws_response_msg = responseDict.objectForKey(WS_RESPONSE_ELEMENT_RESULT_MESSAGE) as? String
-            
-            if ws_response_status == WS_RESPONSE_STATUS_OK {
-                
-                if let dataUser = responseObject.objectForKey(WS_RESPONSE_ELEMENT_DATA) as? NSDictionary {
-                    // Guardamos datos del usuario
-                    let userDat  = Util.userToObject(dataUser) as User
-                    // PENDIENTE: ver donde guardar los datos
-                    USER_DATA = userDat
-                    
-                    // Activamos el Login
-                    //var defaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
-                    NSUserDefaults.standardUserDefaults().setInteger(social, forKey: kLOGIN)
-                    NSUserDefaults.standardUserDefaults().setObject(userDat.userID, forKey: kUSER_USERID)
-                    NSUserDefaults.standardUserDefaults().setObject(userDat.nickName, forKey: kUSER_NICKNAME)
-                    NSUserDefaults.standardUserDefaults().setObject(userDat.email, forKey: kUSER_EMAIL)
-                    NSUserDefaults.standardUserDefaults().setObject(userDat.gender, forKey: kUSER_GENDER)
-                    NSUserDefaults.standardUserDefaults().setObject(userDat.picture, forKey: kUSER_PICTURE)
-                    NSUserDefaults.standardUserDefaults().synchronize()
-                    
-                    // Home
-                    self.performSegueWithIdentifier(VC_HOME, sender: self)
-                } else {
-                    self.dataUserFailed(social)
-                }
-                
-            } else if ws_response_status == WS_RESPONSE_STATUS_KO {
-                let _title = WS_RESPONSE_STATUS_KO
-                var _message = ws_response_msg
-                self.showMessage(_title,message: _message!)
-                self.dataUserFailed(social)
-            } else {
-                let _title = "Atención"
-                var socialNetwork = getSocialNetwork()
-                var _message = "No se ha podido iniciar sesión con \(socialNetwork)"
-                self.showMessage(_title,message: _message)
-                self.dataUserFailed(social)
-            }
-            
-        } else {
-            self.dataUserFailed(social)
-        }
-        
     }
     
     func getSocialNetwork() -> String
@@ -420,19 +278,6 @@ class signUpViewController: UIViewController, FBLoginViewDelegate, GPPSignInDele
         return (socialNetwork)
     }
     
-    func showMessage(title: String, message: String) {
-        
-        let alertController = UIAlertController(
-            title: title,
-            message: message,
-            preferredStyle: UIAlertControllerStyle.Alert)
-        
-        alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default,handler: nil))
-        
-        self.presentViewController(alertController, animated: true, completion: nil)
-        
-    }
-    
     
     func dataUserFailed(social: Int) {
         MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
@@ -444,9 +289,9 @@ class signUpViewController: UIViewController, FBLoginViewDelegate, GPPSignInDele
             socialNetwork = "Google+"
         }
         
-        let alertController = UIAlertController(title: "Atención", message:
-            "No se ha podido iniciar sesión con \(socialNetwork)", preferredStyle: UIAlertControllerStyle.Alert)
-        alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default,handler: nil))
+        let _title = "Atención"
+        var _message = "No se ha podido iniciar sesión con \(socialNetwork)"
+        let alertController = Util.showMessage(_title,message: _message)
         self.presentViewController(alertController, animated: true, completion: nil)
     }
 

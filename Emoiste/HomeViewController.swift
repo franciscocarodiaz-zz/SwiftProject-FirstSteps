@@ -10,20 +10,40 @@ import UIKit
 
 class HomeViewController: UIViewController {
 
+    let fbHelper = FBUserHelper();
+    
     @IBOutlet weak var userTextView: UITextView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         var defaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
-        var texto = "Nick Name: \(USER_DATA.nickName!)\nEmail: \(USER_DATA.email!)"
+        var texto = "Nick Name: \(USER_DATA.nickName)\nEmail: \(USER_DATA.email)"
         userTextView.text = texto
+        
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        /*
+        var defaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
+        if (defaults.objectForKey(kTUTORIAL) as Int == 0) {
+            
+            defaults.setObject(1, forKey: kTUTORIAL)
+            defaults.synchronize()
+            
+            self.performSegueWithIdentifier(VC_TUTORIAL, sender: self)
+        }
+        */
         
     }
     
     // MARK: IBAction
     
     @IBAction func logout(sender: AnyObject) {
+        
+        fbHelper.logout()
         var defaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
         // Login: 0-no login
         defaults.setObject(0, forKey: kLOGIN)

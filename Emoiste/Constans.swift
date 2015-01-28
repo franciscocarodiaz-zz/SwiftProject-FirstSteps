@@ -14,10 +14,15 @@ let VC_HOME = "Home"
 let VC_LOGIN = "Login"
 let VC_MAIN = "Main"
 let VC_REGISTER = "Registro"
+let VC_TUTORIAL = "Login"
 
 // NSUserDefault
 let kUSER = "user"
 let kLOGIN = "Login"
+let kTUTORIAL = "tutorial"
+let kUSER_LOGIN_DEFAULT = "login_default"
+let kUSER_LOGIN_FACEBOOK = "login_facebook"
+let kUSER_LOGIN_GOOGLE = "login_google"
 
 // Request Parameter
 let REQUEST_LOGIN = "login"
@@ -70,6 +75,9 @@ let WS_RESPONSE_STATUS_KO_MSG_2 = "A user already exists with this email."
 
 // Google +
 let GOOGLE_CLIENT_ID = "698470843790-10u93emn4sb2te6ea215vkcmtdgd7960.apps.googleusercontent.com"
+
+// Notifications
+let NOTIFICATION_FACEBOOK_LOGIN = "PostDataFBUSer"
 
 
 // Variables globales

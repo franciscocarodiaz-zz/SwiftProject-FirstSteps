@@ -10,7 +10,22 @@ import Foundation
 
 class Util {
     
+    class func showMessage(title: String, message: String) -> UIAlertController {
+        
+        let alertController = UIAlertController(
+            title: title,
+            message: message,
+            preferredStyle: UIAlertControllerStyle.Alert)
+        
+        alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default,handler: nil))
+        
+        return alertController
+        
+    }
+    
     class func userFromDefault() -> User {
+        
+        TYPE_REGISTER_RRSS = NSUserDefaults.standardUserDefaults().objectForKey(kLOGIN) as Int
         
         switch(TYPE_REGISTER_RRSS){
         case USER_FACEBOOK:
