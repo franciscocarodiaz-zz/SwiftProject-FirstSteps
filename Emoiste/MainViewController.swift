@@ -55,7 +55,42 @@ class MainViewController: UIViewController,GPPSignInDelegate {
     
     func executeHandleFBUser(notification:NSNotification){
         let userData = notification.object as User;
+        var defaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
+        
+        if (defaults.objectForKey(kUSER_FB_USERID) as String != "") {
+            //let user_id_fb = defaults.objectForKey(kUSER_FB_USERID) as String!
+            //userData.userIDFB = user_id_fb
+        }
         USER_DATA = userData
+        
+        let path = "get";
+        let responseObject: AnyObject = ""
+        var params = [
+            "userId" : userData.userID
+        ]
+        
+        APIHelper.callAPIUser(path,parameters: params, completionHandler: { (responseObject, errorValue) -> Void in
+            if !errorValue{
+                var str:String = ""
+                println(responseObject)
+                
+                if let responseDict = responseObject.objectForKey(WS_RESPONSE_ELEMENT_RESULT) as? NSDictionary {
+                    
+                    let ws_response_status = responseDict.objectForKey(WS_RESPONSE_ELEMENT_RESULT_STATUS) as? String
+                    let ws_response_msg = responseDict.objectForKey(WS_RESPONSE_ELEMENT_RESULT_MESSAGE) as? String
+                    
+                    if ws_response_status == WS_RESPONSE_STATUS_OK {
+                        let dataUser = responseObject.objectForKey(WS_RESPONSE_ELEMENT_DATA) as? NSDictionary
+                        let userDat  = Util.userToObject(dataUser!) as User
+                        
+                        //USER_DATA = Util.copyUserFromServer(userDat) as User
+                        
+                    }
+                }
+                
+            }
+        })
+        
         self.performSegueWithIdentifier(VC_HOME, sender: self)
     }
     
@@ -83,12 +118,17 @@ class MainViewController: UIViewController,GPPSignInDelegate {
             let gender = signIn?.googlePlusUser.gender as String!
             let userImageURL = signIn?.googlePlusUser.image.url as String!
             
-            var userData = User(userID: user_id, nickName: nickName, email: email, gender:gender,picture:userImageURL);
-            
             // 2. Save type of user
             var defaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
             defaults.setObject(TYPE_REGISTER_RRSS, forKey: kLOGIN)
             defaults.synchronize()
+            
+            let user_id_g = ""
+            if (defaults.objectForKey(kUSER_G_USERID) as String != "") {
+                //user_id_g = defaults.objectForKey(kUSER_G_USERID) as String!
+            }
+            
+            var userData = User(userID: user_id, userIDFB: USER_DATA.userIDFB, userIDG: user_id_g, nickName: nickName, email: email, gender:gender,picture:userImageURL);
             
             USER_DATA = userData
             USER_DATA.loginGPlus = true

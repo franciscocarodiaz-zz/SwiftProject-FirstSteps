@@ -105,6 +105,242 @@ class Util {
         return user
     }
     
+    class func copyUserFromServer(userFromServer: User) -> User {
+        
+        let user = USER_DATA
+        var hasModified :Bool = false
+        var localUser = user.userIDFB as? String
+        var serverUser = userFromServer.userIDFB as? String
+        var isEqual = (localUser == serverUser)
+        if !isEqual {
+            user.userIDFB =  serverUser!;
+            hasModified = true
+        }
+        
+        localUser = user.nickName as? String
+        serverUser = userFromServer.nickName as? String
+        isEqual = (localUser == serverUser)
+        if !isEqual {
+            user.nickName =  serverUser!;
+            hasModified = true
+        }
+        
+        localUser = user.email as? String
+        serverUser = userFromServer.email as? String
+        isEqual = (localUser == serverUser)
+        if !isEqual {
+            user.email =  serverUser!;
+            hasModified = true
+        }
+        
+        localUser = user.fullName as? String
+        serverUser = userFromServer.fullName as? String
+        isEqual = (localUser == serverUser)
+        if !isEqual {
+            user.fullName =  serverUser!;
+            hasModified = true
+        }
+        
+        localUser = user.country as? String
+        serverUser = userFromServer.country as? String
+        isEqual = (localUser == serverUser)
+        if !isEqual {
+            user.country =  serverUser!;
+            hasModified = true
+        }
+        
+        localUser = user.gender as? String
+        serverUser = userFromServer.gender as? String
+        isEqual = (localUser == serverUser)
+        if !isEqual {
+            user.gender =  serverUser!;
+            hasModified = true
+        }
+        
+        localUser = user.myStyle as? String
+        serverUser = userFromServer.myStyle as? String
+        isEqual = (localUser == serverUser)
+        if !isEqual {
+            user.myStyle =  serverUser!;
+            hasModified = true
+        }
+        
+        localUser = user.isBlogger as? String
+        serverUser = userFromServer.isBlogger as? String
+        isEqual = (localUser == serverUser)
+        if !isEqual {
+            user.isBlogger =  serverUser!;
+            hasModified = true
+        }
+        
+        localUser = user.rememberMe as? String
+        serverUser = userFromServer.rememberMe as? String
+        isEqual = (localUser == serverUser)
+        if !isEqual {
+            user.rememberMe =  serverUser!;
+            hasModified = true
+        }
+        
+        localUser = user.picture as? String
+        serverUser = userFromServer.picture as? String
+        isEqual = (localUser == serverUser)
+        if !isEqual {
+            user.picture =  serverUser!;
+            hasModified = true
+        }
+        
+        localUser = user.notifications as? String
+        serverUser = userFromServer.notifications as? String
+        isEqual = (localUser == serverUser)
+        if !isEqual {
+            user.notifications =  serverUser!;
+            hasModified = true
+        }
+        
+        localUser = user.notifications as? String
+        serverUser = userFromServer.notifications as? String
+        isEqual = (localUser == serverUser)
+        if !isEqual {
+            user.notifications =  serverUser!;
+            hasModified = true
+        }
+        
+        /*
+        if let aboutYou = dict.objectForKey("aboutYou") as? String {
+            user.aboutYou =  aboutYou
+        } else {
+            user.aboutYou = ""
+        }
+        if let location = dict.objectForKey("location") as? String {
+            user.location =  location
+        } else {
+            user.location = ""
+        }
+        if let birthDate = dict.objectForKey("birthDate") as? String {
+            user.birthDate =  birthDate
+        } else {
+            user.birthDate = ""
+        }
+        
+        if let blog = dict.objectForKey("blog") as? String {
+            user.blog =  blog
+        } else {
+            user.blog = ""
+        }
+        if let loginFacebook = dict.objectForKey("loginFacebook") as? String {
+            user.loginFacebook =  loginFacebook
+        } else {
+            user.loginFacebook = ""
+        }
+        if let loginGPlus = dict.objectForKey("loginGPlus") as? String {
+            user.loginGPlus =  loginGPlus
+        } else {
+            user.loginGPlus = ""
+        }
+        if let twitter = dict.objectForKey("twitter") as? String {
+            user.twitter =  twitter
+        } else {
+            user.twitter = ""
+        }
+        if let created = dict.objectForKey("created") as? String {
+            user.created =  created
+        } else {
+            user.created = ""
+        }
+        if let userType = dict.objectForKey("userType") as? String {
+            user.userType =  userType
+        } else {
+            user.userType = ""
+        }
+        if let deviceType = dict.objectForKey("deviceType") as? String {
+            user.deviceType =  deviceType
+        } else {
+            user.deviceType = ""
+        }
+        if let deviceOS = dict.objectForKey("deviceOS") as? String {
+            user.deviceOS =  deviceOS
+        } else {
+            user.deviceOS = ""
+        }
+        if let sessionRemember = dict.objectForKey("sessionRemember") as? String {
+            user.sessionRemember =  sessionRemember
+        } else {
+            user.sessionRemember = ""
+        }
+        if let notiNewFollowMe = dict.objectForKey("notiNewFollowMe") as? String {
+            user.notiNewFollowMe =  notiNewFollowMe
+        } else {
+            user.notiNewFollowMe = ""
+        }
+        if let notiCommentMyTimeline = dict.objectForKey("notiCommentMyTimeline") as? String {
+            user.notiCommentMyTimeline =  notiCommentMyTimeline
+        } else {
+            user.notiCommentMyTimeline = ""
+        }
+        if let notiShareWithMe = dict.objectForKey("notiShareWithMe") as? String {
+            user.notiShareWithMe =  notiShareWithMe
+        } else {
+            user.notiShareWithMe = ""
+        }
+        if let notiTrendsetterAddNewItem = dict.objectForKey("notiTrendsetterAddNewItem") as? String {
+            user.notiTrendsetterAddNewItem =  notiTrendsetterAddNewItem
+        } else {
+            user.notiTrendsetterAddNewItem = ""
+        }
+        if let notiNewTrendsetter = dict.objectForKey("notiNewTrendsetter") as? String {
+            user.notiNewTrendsetter =  notiNewTrendsetter
+        } else {
+            user.notiNewTrendsetter = ""
+        }
+        if let notiBrandHasNewItem = dict.objectForKey("notiBrandHasNewItem") as? String {
+            user.notiBrandHasNewItem =  notiBrandHasNewItem
+        } else {
+            user.notiBrandHasNewItem = ""
+        }
+        if let notiNewBrand = dict.objectForKey("notiNewBrand") as? String {
+            user.notiNewBrand =  notiNewBrand
+        } else {
+            user.notiNewBrand = ""
+        }
+        if let pasosConfiguracion = dict.objectForKey("pasosConfiguracion") as? String {
+            user.pasosConfiguracion =  pasosConfiguracion
+        } else {
+            user.pasosConfiguracion = ""
+        }
+        if let userTypeDesc = dict.objectForKey("userTypeDesc") as? String {
+            user.userTypeDesc =  userTypeDesc
+        } else {
+            user.userTypeDesc = ""
+        }
+        if let genderDesc = dict.objectForKey("genderDesc") as? String {
+            user.genderDesc =  genderDesc
+        } else {
+            user.genderDesc = ""
+        }
+        if let activateDesc = dict.objectForKey("activateDesc") as? String {
+            user.activateDesc =  activateDesc
+        } else {
+            user.activateDesc = ""
+        }
+        if let influencerName = dict.objectForKey("influencerName") as? String {
+            user.influencerName =  influencerName
+        } else {
+            user.influencerName = ""
+        }
+        if let followMeCount = dict.objectForKey("followMeCount") as? String {
+            user.followMeCount =  followMeCount
+        } else {
+            user.followMeCount = ""
+        }
+        */
+        
+        if hasModified{
+            NSNotificationCenter.defaultCenter().postNotificationName(NOTIFICATION_USER_DATA_RECEIVE, object: nil, userInfo: nil);
+        }
+        
+        return user
+    }
+    
     class func userToObject(dict: NSDictionary) -> User {
         
         let user = User()

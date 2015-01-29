@@ -101,17 +101,18 @@ class signUpViewController: UIViewController, FBLoginViewDelegate, GPPSignInDele
         
         // 1. Save user data
         let userData = notification.object as User;
+        USER_DATA = userData
         
         // 2. Save type of user
         var defaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
         defaults.setObject(TYPE_REGISTER_RRSS, forKey: kLOGIN)
         defaults.synchronize()
         
-        if (defaults.objectForKey(kUSER_LOGIN_FACEBOOK) != nil && defaults.objectForKey(kUSER_LOGIN_FACEBOOK) as Int == USER_FACEBOOK) {
+        if (defaults.objectForKey(kUSER_LOGIN_FACEBOOK) != nil &&
+            (defaults.objectForKey(kUSER_LOGIN_FACEBOOK) as String).isEqual(USER_FACEBOOK)) {
             // Llamada a API para comprobar loginSocial
-            USER_DATA = userData
             USER_DATA.loginFacebook = true
-            
+            USER_DATA.userIDFB = defaults.objectForKey(kUSER_LOGIN_FACEBOOK) as String
             self.navigateTo(VC_HOME)
         }else{
             // 3. Register user and go to Home screen
@@ -147,17 +148,18 @@ class signUpViewController: UIViewController, FBLoginViewDelegate, GPPSignInDele
             let userImageURL = signIn?.googlePlusUser.image.url as String!
             
             var userData = User(userID: user_id, nickName: nickName, email: email, gender:gender,picture:userImageURL);
+            USER_DATA = userData
             
             // 2. Save type of user
             var defaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
             defaults.setObject(TYPE_REGISTER_RRSS, forKey: kLOGIN)
             defaults.synchronize()
             
-            if (defaults.objectForKey(kUSER_LOGIN_GOOGLE) != nil && defaults.objectForKey(kUSER_LOGIN_GOOGLE) as Int == USER_GOOGLE) {
+            if (defaults.objectForKey(kUSER_LOGIN_GOOGLE) != nil &&
+                (defaults.objectForKey(kUSER_LOGIN_GOOGLE) as String) .isEqual(USER_GOOGLE)) {
                 // Llamada a API para comprobar loginSocial
-                USER_DATA = userData
                 USER_DATA.loginGPlus = true
-                
+                USER_DATA.userIDG = defaults.objectForKey(kUSER_LOGIN_GOOGLE) as String
                 self.navigateTo(VC_HOME)
             }else{
                 // 3. Register user and go to Home screen
@@ -220,15 +222,19 @@ class signUpViewController: UIViewController, FBLoginViewDelegate, GPPSignInDele
                         if ws_response_status == WS_RESPONSE_STATUS_OK {
                             let dataUser = responseObject.objectForKey(WS_RESPONSE_ELEMENT_DATA) as? NSDictionary
                             let userDat  = Util.userToObject(dataUser!) as User
-                            USER_DATA = userDat
+                            
+                            USER_DATA = Util.copyUserFromServer(userDat) as User
                             
                             var defaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
+                            
                             if TYPE_REGISTER_RRSS == USER_FACEBOOK{
                                 USER_DATA.loginFacebook = true
                                 defaults.setObject(USER_FACEBOOK, forKey: kUSER_LOGIN_FACEBOOK)
+                                defaults.setObject(USER_DATA.userID, forKey: kUSER_FB_USERID)
                             }else if TYPE_REGISTER_RRSS == USER_GOOGLE{
                                 USER_DATA.loginGPlus = true
                                 defaults.setObject(USER_GOOGLE, forKey: kUSER_LOGIN_GOOGLE)
+                                defaults.setObject(USER_DATA.userID, forKey: kUSER_G_USERID)
                             }
                             if method == "register"{
                                 defaults.setObject(0, forKey: kTUTORIAL)

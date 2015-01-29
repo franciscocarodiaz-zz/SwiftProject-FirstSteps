@@ -78,7 +78,7 @@ let GOOGLE_CLIENT_ID = "698470843790-10u93emn4sb2te6ea215vkcmtdgd7960.apps.googl
 
 // Notifications
 let NOTIFICATION_FACEBOOK_LOGIN = "PostDataFBUSer"
-
+let NOTIFICATION_USER_DATA_RECEIVE = "PostDataUserReceiveFromServer"
 
 // Variables globales
 var TYPE_REGISTER_RRSS : Int!

@@ -17,10 +17,15 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        var defaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("executeHandleReceiveUserFromServer:"), name: NOTIFICATION_USER_DATA_RECEIVE, object: nil);
+        
         var texto = "Nick Name: \(USER_DATA.nickName)\nEmail: \(USER_DATA.email)"
         userTextView.text = texto
         
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: NOTIFICATION_USER_DATA_RECEIVE, object: nil);
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -50,6 +55,11 @@ class HomeViewController: UIViewController {
         defaults.synchronize()
         // Login
         self.performSegueWithIdentifier(VC_LOGIN, sender: self)
+    }
+    
+    func executeHandleReceiveUserFromServer(notification:NSNotification){
+        var texto = "Nick Name: \(USER_DATA.nickName)\nEmail: \(USER_DATA.email)"
+        userTextView.text = texto
     }
     
     override func didReceiveMemoryWarning() {

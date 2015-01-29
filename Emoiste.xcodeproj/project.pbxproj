@@ -35,6 +35,7 @@
 		3EB739C41A78D5DD0082F691 /* FBUserHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB739C31A78D5DD0082F691 /* FBUserHelper.swift */; };
 		3EB739C61A78DB940082F691 /* AlbumModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB739C51A78DB940082F691 /* AlbumModel.swift */; };
 		3ED2D89B1A79270300C0EA36 /* GoogleUserHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED2D89A1A79270300C0EA36 /* GoogleUserHelper.swift */; };
+		3ED2D9141A7A356500C0EA36 /* APIHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED2D9131A7A356500C0EA36 /* APIHelper.swift */; };
 		81F1B0161A5C736800A013A7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F1B0151A5C736800A013A7 /* AppDelegate.swift */; };
 		81F1B01B1A5C736800A013A7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81F1B0191A5C736800A013A7 /* Main.storyboard */; };
 		81F1B01D1A5C736800A013A7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81F1B01C1A5C736800A013A7 /* Images.xcassets */; };
@@ -125,6 +126,7 @@
 		3EB739C31A78D5DD0082F691 /* FBUserHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FBUserHelper.swift; sourceTree = "<group>"; };
 		3EB739C51A78DB940082F691 /* AlbumModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlbumModel.swift; sourceTree = "<group>"; };
 		3ED2D89A1A79270300C0EA36 /* GoogleUserHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleUserHelper.swift; sourceTree = "<group>"; };
+		3ED2D9131A7A356500C0EA36 /* APIHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIHelper.swift; sourceTree = "<group>"; };
 		81F1B0101A5C736800A013A7 /* Emoiste.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Emoiste.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		81F1B0141A5C736800A013A7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		81F1B0151A5C736800A013A7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -285,6 +287,7 @@
 		3BFC19B81A681331002E2B96 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				3ED2D9131A7A356500C0EA36 /* APIHelper.swift */,
 				3B738E991A6E6EFF00DFF0F8 /* Login */,
 				3B64B3F41A6CEE0200BB0090 /* Home */,
 				3B64B3F11A6CEA2100BB0090 /* Main */,
@@ -546,6 +549,7 @@
 				3EB739C61A78DB940082F691 /* AlbumModel.swift in Sources */,
 				3B64B3F61A6CEE2700BB0090 /* HomeViewController.swift in Sources */,
 				3BFC19ED1A6815A2002E2B96 /* UIProgressView+AFNetworking.m in Sources */,
+				3ED2D9141A7A356500C0EA36 /* APIHelper.swift in Sources */,
 				3BFC19EB1A6815A2002E2B96 /* UIButton+AFNetworking.m in Sources */,
 				3BFC19EE1A6815A2002E2B96 /* UIRefreshControl+AFNetworking.m in Sources */,
 				3BFC19EA1A6815A2002E2B96 /* UIAlertView+AFNetworking.m in Sources */,

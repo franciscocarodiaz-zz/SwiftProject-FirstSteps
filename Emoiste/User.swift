@@ -11,6 +11,8 @@ import UIKit
 
 class User {
     var userID:AnyObject = "";
+    var userIDFB:AnyObject = "";
+    var userIDG:AnyObject = "";
     var nickName:AnyObject = "";
     var email:AnyObject = "";
     var fullName:AnyObject = "";
@@ -51,6 +53,16 @@ class User {
     
     init(userID:AnyObject, nickName:AnyObject, email:AnyObject, gender:AnyObject, picture:AnyObject){
         self.userID = userID
+        self.nickName = nickName
+        self.email=email
+        self.gender = gender
+        self.picture = picture
+    }
+    
+    init(userID:AnyObject, userIDFB:AnyObject, userIDG:AnyObject, nickName:AnyObject, email:AnyObject, gender:AnyObject, picture:AnyObject){
+        self.userID = userID
+        self.userIDFB = userIDFB
+        self.userIDG = userIDG
         self.nickName = nickName
         self.email=email
         self.gender = gender
