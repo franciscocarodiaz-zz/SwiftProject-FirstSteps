@@ -24,6 +24,14 @@ let kUSER_LOGIN_DEFAULT = "login_default"
 let kUSER_LOGIN_FACEBOOK = "login_facebook"
 let kUSER_LOGIN_GOOGLE = "login_google"
 
+//Reset Password
+let RESET_PASSWORD = "forgotPassword"
+
+//Recuperar datos de usuario
+
+let GET_USERDATA = "get"
+
+
 // Request Parameter
 let REQUEST_LOGIN = "login"
 let REQUEST_REGISTER = "register"

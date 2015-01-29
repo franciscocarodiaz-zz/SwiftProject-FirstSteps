@@ -14,19 +14,52 @@ class HomeViewController: UIViewController {
     
     @IBOutlet weak var userTextView: UITextView!
     
+    @IBOutlet var backgroundImage: UIButton!
+    
+    
+    @IBAction func resetPassword(sender: AnyObject) {
+        
+        resetPassword("davidhev@me.com")
+        
+    }
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+<<<<<<< HEAD
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("executeHandleReceiveUserFromServer:"), name: NOTIFICATION_USER_DATA_RECEIVE, object: nil);
         
+=======
+        
+        
+        
+        
+        
+        
+        
+        
+        var defaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
+>>>>>>> fc4bf7d906c9728aec632209410da300e689c6fe
         var texto = "Nick Name: \(USER_DATA.nickName)\nEmail: \(USER_DATA.email)"
         userTextView.text = texto
         
+        
+        
+        
+        
+        
     }
     
+<<<<<<< HEAD
     override func viewDidDisappear(animated: Bool) {
         NSNotificationCenter.defaultCenter().removeObserver(self, name: NOTIFICATION_USER_DATA_RECEIVE, object: nil);
     }
+=======
+    
+    
+    
+>>>>>>> fc4bf7d906c9728aec632209410da300e689c6fe
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
@@ -66,5 +99,92 @@ class HomeViewController: UIViewController {
         super.didReceiveMemoryWarning()
         
     }
+    
+    func dataUserFailed() {
+        MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
+        
+        let alertController = UIAlertController(title: "Atención", message:
+            "No se ha podido recuperar la contraseña", preferredStyle: UIAlertControllerStyle.Alert)
+        alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default,handler: nil))
+        self.presentViewController(alertController, animated: true, completion: nil)
+    }
+    
+    
+    func dataUserLoaded(responseObject: AnyObject) {
+        MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
+        
+        if let responseDict = responseObject.objectForKey("result") as? NSDictionary {
+            let status = responseDict.objectForKey("status") as? String
+            if status == "ok" {
+                
+                let alertController = UIAlertController(title: "Atención", message:
+                    "Se ha enviado una nueva contraseña a tu correo", preferredStyle: UIAlertControllerStyle.Alert)
+                alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default,handler: nil))
+                self.presentViewController(alertController, animated: true, completion: nil)
+                
+                
+                
+                
+                
+            } else {
+                println(responseDict.objectForKey("msg"))
+                self.dataUserFailed()
+            }
+            
+            
+            
+            
+        }
+    }
 
+    
+    
+    
+    func resetPassword(email:String) {
+        
+        
+        
+        
+        
+        
+        let loadingHUD = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        loadingHUD.mode = MBProgressHUDModeIndeterminate
+        loadingHUD.labelText = "Iniciando"
+        
+        let path = PATH_WS_USER;
+        let baseURL = NSURL(string: path)
+        
+        var params = [
+            "email" : email,
+            
+        ]
+        
+        let manager = AFHTTPRequestOperationManager(baseURL: baseURL)
+        let jsonResponseSerializer = AFJSONResponseSerializer()
+        jsonResponseSerializer.stringEncoding = NSUTF8StringEncoding
+        manager.responseSerializer = jsonResponseSerializer
+        
+        manager.POST(RESET_PASSWORD,
+            parameters: params,
+            success: { (operation: AFHTTPRequestOperation!, responseObject: AnyObject!) in
+                //println(responseObject.description)
+                if (responseObject != nil) {
+                    self.dataUserLoaded(responseObject)
+                } else {
+                    self.dataUserFailed()
+                }
+            },
+            failure: { (operation: AFHTTPRequestOperation!, error: NSError!) in
+                println(error.description)
+                self.dataUserFailed()
+            }
+        )
+    }
+    
 }
+
+
+    
+
+
+

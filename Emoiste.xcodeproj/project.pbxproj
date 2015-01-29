@@ -35,7 +35,11 @@
 		3EB739C41A78D5DD0082F691 /* FBUserHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB739C31A78D5DD0082F691 /* FBUserHelper.swift */; };
 		3EB739C61A78DB940082F691 /* AlbumModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB739C51A78DB940082F691 /* AlbumModel.swift */; };
 		3ED2D89B1A79270300C0EA36 /* GoogleUserHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED2D89A1A79270300C0EA36 /* GoogleUserHelper.swift */; };
+<<<<<<< HEAD
 		3ED2D9141A7A356500C0EA36 /* APIHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED2D9131A7A356500C0EA36 /* APIHelper.swift */; };
+=======
+		817F2B631A795DE400EE63FB /* accountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 817F2B621A795DE400EE63FB /* accountViewController.swift */; };
+>>>>>>> fc4bf7d906c9728aec632209410da300e689c6fe
 		81F1B0161A5C736800A013A7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F1B0151A5C736800A013A7 /* AppDelegate.swift */; };
 		81F1B01B1A5C736800A013A7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81F1B0191A5C736800A013A7 /* Main.storyboard */; };
 		81F1B01D1A5C736800A013A7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81F1B01C1A5C736800A013A7 /* Images.xcassets */; };
@@ -126,7 +130,11 @@
 		3EB739C31A78D5DD0082F691 /* FBUserHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FBUserHelper.swift; sourceTree = "<group>"; };
 		3EB739C51A78DB940082F691 /* AlbumModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlbumModel.swift; sourceTree = "<group>"; };
 		3ED2D89A1A79270300C0EA36 /* GoogleUserHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleUserHelper.swift; sourceTree = "<group>"; };
+<<<<<<< HEAD
 		3ED2D9131A7A356500C0EA36 /* APIHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIHelper.swift; sourceTree = "<group>"; };
+=======
+		817F2B621A795DE400EE63FB /* accountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = accountViewController.swift; sourceTree = "<group>"; };
+>>>>>>> fc4bf7d906c9728aec632209410da300e689c6fe
 		81F1B0101A5C736800A013A7 /* Emoiste.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Emoiste.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		81F1B0141A5C736800A013A7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		81F1B0151A5C736800A013A7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -376,6 +384,7 @@
 		3BFC19F61A682297002E2B96 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				817F2B621A795DE400EE63FB /* accountViewController.swift */,
 				81F1B0381A5C7E8D00A013A7 /* ProfileViewController.swift */,
 			);
 			name = Profile;
@@ -547,6 +556,7 @@
 			files = (
 				3B738E9B1A6E6F4900DFF0F8 /* LoginViewController.swift in Sources */,
 				3EB739C61A78DB940082F691 /* AlbumModel.swift in Sources */,
+				817F2B631A795DE400EE63FB /* accountViewController.swift in Sources */,
 				3B64B3F61A6CEE2700BB0090 /* HomeViewController.swift in Sources */,
 				3BFC19ED1A6815A2002E2B96 /* UIProgressView+AFNetworking.m in Sources */,
 				3ED2D9141A7A356500C0EA36 /* APIHelper.swift in Sources */,
